@@ -43,9 +43,10 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 app.layout = html.Div([
-    html.H2('Home Value Predicitions'),
+    html.H2('Home Value Projection'),
     dcc.Input(id='zip-code', value=98272, type='number'),
-    html.Div(id='my-div')
+    html.Div(id='my-div'),
+    dcc.Graph(id='pred-graph')
 ])
 
 @app.callback(
@@ -54,11 +55,22 @@ app.layout = html.Div([
 )
 def update_output_div(input_value):
     row = prophet_df_from_zillow_row(input_value)
-    print(row)
+    if isinstance(row, pd.DataFrame):
+        return 'Property Value Projection for {}'.format(input_value)
+    else:
+        return 'Invalid Zip'
+
+@app.callback(
+    Output(component_id='pred-graph', component_property='figure'),
+    [Input(component_id='zip-code', component_property='value')]
+)
+def extract_zip_display_graph(input_value):
+    row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
         return prophet_prediction(row)
-    else:  
-        return 'Invalid Zip Code: {}'.format(input_value)
+    else:
+        return {}
+        
 
 if __name__ == '__main__':
     app.run_server(debug=True)
