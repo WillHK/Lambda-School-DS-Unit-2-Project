@@ -58,11 +58,10 @@ app.layout = html.Div([
     dcc.Slider(min=1, max=10, step=0.5, value=5),
     html.Div(id='my-div'),
     html.Div([
-        dcc.Graph(id='pred-graph'),
-        dcc.Graph(id='zip-map')
-    ])
-    
-])
+        dcc.Graph(id='pred-graph', className="six columns"),
+        dcc.Graph(id='zip-map', className="six columns")
+    ], className="row")
+], className="container")
 
 @app.callback(
     Output(component_id='my-div', component_property='children'),
