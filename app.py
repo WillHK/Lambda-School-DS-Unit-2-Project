@@ -57,7 +57,8 @@ app.layout = html.Div([
             html.H6('Enter a US Zip Code'),
             dcc.Input(id='zip-code', value=98272, type='number'),
             html.H6('In how many years do you want to retire?'),
-            dcc.Slider(min=1, max=10, step=0.5, value=5)
+            dcc.Slider(min=1, max=10, step=0.5, value=5),
+            html.Div(id='slider-label')
         ], className="six columns"),
         html.Div([
             html.H4('Map of local area'),
@@ -65,8 +66,13 @@ app.layout = html.Div([
         ], className="six columns")
     ], className="row"),
     html.Div(id='my-div'),
-    dcc.Graph(id='pred-graph')
+    dcc.Graph(id='pred-graph'),
+    html.H6("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
 ], className="container")
+
+@app.callback(
+    Output(component_id="slider-label", )
+)
 
 @app.callback(
     Output(component_id='my-div', component_property='children'),
