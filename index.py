@@ -49,11 +49,15 @@ def prophet_df_from_zillow_row(row):
 
 def prophet_prediction(row, zip_code, retirement_date='2029'):
     # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
-    with open("pickles/{}_model.pkl".format(zip_code), 'rb') as f:
-        unpickler = pickle.Unpickler(f)
-        m = unpickler.load()
+    # with open("pickles/{}_model.pkl".format(zip_code), 'rb') as f:
+    #     unpickler = pickle.Unpickler(f)
+    #     m = unpickler.load()
+    m = Prophet(seasonality_mode='multiplicative')
+    row = row[(row['ds'] > '2009')]
+    m.fit(p_df)
+    m.plot(forecast)
     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
-    forecast = forecast[(forecast['ds'] > '2016') & (forecast['ds'] < str(retirement_date))] 
+    forecast = forecast[(forecast['ds'] > '2009') & (forecast['ds'] < str(retirement_date))] 
     return plot_plotly(m, forecast)
     # else:
     #     m = Prophet(seasonality_mode='multiplicative')
