@@ -84,10 +84,11 @@ def update_output_div(input_value):
     Output(component_id='pred-graph', component_property='figure'),
     [Input(component_id='zip-code', component_property='value'), Input(component_id='retirement-slider', component_property='value')]
 )
-def extract_zip_display_graph(input_value, retirement_date):
+def extract_zip_display_graph(input_value, retirement_distance):
+    retirement_date = 2019 + retirement_distance
     row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
-        return prophet_prediction(row, input_value)
+        return prophet_prediction(row, input_value, retirement_date)
     else:
         return {}
         
