@@ -29,17 +29,17 @@ def prophet_df_from_zillow_row(row):
 
 
 def prophet_prediction(row, zip_code):
-    if os.path.exists('pickles/{}_forecast.plk'.format(zip_code)):
-        with open("pickles/{}_model.plk", 'wb') as f:
-            pickle.dump(m, f)
-        forecast = pd.read_pickle('pickles/{}_forecast.plk'.format(zip_code)) 
-        return plot_plotly(m, forecast)
-    else:
-        m = Prophet(seasonality_mode='multiplicative')
-        m.fit(row)
-        future = m.make_future_dataframe(periods=120, freq='M')
-        forecast = m.predict(future)
-        return plot_plotly(m, forecast)
+    # if os.path.exists('pickles/{}_forecast.plk'.format(zip_code)):
+    with open("pickles/{}_model.plk", 'wb') as f:
+        pickle.dump(m, f)
+    forecast = pd.read_pickle('pickles/{}_forecast.plk'.format(zip_code)) 
+    return plot_plotly(m, forecast)
+    # else:
+    #     m = Prophet(seasonality_mode='multiplicative')
+    #     m.fit(row)
+    #     future = m.make_future_dataframe(periods=120, freq='M')
+    #     forecast = m.predict(future)
+    #     return plot_plotly(m, forecast)
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
