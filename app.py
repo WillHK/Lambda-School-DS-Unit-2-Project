@@ -60,7 +60,7 @@ app.layout = html.Div([
             dcc.Slider(min=1, max=10, step=0.5, value=5)
         ], className="six columns"),
         html.Div([
-            html.h4('Map of local area'),
+            html.H4('Map of local area'),
             dcc.Graph(id='zip-map')
         ], className="six columns")
     ], className="row"),
