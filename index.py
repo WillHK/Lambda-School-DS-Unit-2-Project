@@ -47,12 +47,13 @@ def prophet_df_from_zillow_row(row):
     return row
 
 
-def prophet_prediction(row, zip_code):
+def prophet_prediction(row, zip_code, retirement_date='2029'):
     # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
     with open("pickles/{}_model.pkl".format(zip_code), 'rb') as f:
         unpickler = pickle.Unpickler(f)
         m = unpickler.load()
-    forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code)) 
+    forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
+    forecast[(forecast['ds'] > '2016') & (forecast['ds'] < str(retirement_date))] 
     return plot_plotly(m, forecast)
     # else:
     #     m = Prophet(seasonality_mode='multiplicative')
@@ -81,9 +82,9 @@ def update_output_div(input_value):
 
 @app.callback(
     Output(component_id='pred-graph', component_property='figure'),
-    [Input(component_id='zip-code', component_property='value')]
+    [Input(component_id='zip-code', component_property='value'), Input(component_id='retirement-slider', component_property='value')]
 )
-def extract_zip_display_graph(input_value):
+def extract_zip_display_graph(input_value, retirement_date):
     row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
         return prophet_prediction(row, input_value)
