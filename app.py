@@ -52,19 +52,19 @@ server = app.server
 
 app.layout = html.Div([
     html.H2('Retirement Hunt'),
-    html.H6('Enter a US Zip Code'),
-    dcc.Input(id='zip-code', value=98272, type='number'),
-    html.H6('In how many years do you want to retire?'),
-    dcc.Slider(min=1, max=10, step=0.5, value=5),
-    html.Div(id='my-div'),
     html.Div([
         html.Div([
-            dcc.Graph(id='pred-graph')
+            html.H6('Enter a US Zip Code'),
+            dcc.Input(id='zip-code', value=98272, type='number'),
+            html.H6('In how many years do you want to retire?'),
+            dcc.Slider(min=1, max=10, step=0.5, value=5),
+            html.Div(id='my-div'),
         ], className="six columns"),
         html.Div([
             dcc.Graph(id='zip-map')
         ], className="six columns")
-    ], className="row")
+    ], className="row"),
+    dcc.Graph(id='pred-graph')
 ], className="container")
 
 @app.callback(
