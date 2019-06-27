@@ -28,17 +28,19 @@ def prophet_df_from_zillow_row(row):
     return row
 
 
-def prophet_prediction(row):
-    m = Prophet(seasonality_mode='multiplicative')
-    m.fit(row)
-    future = m.make_future_dataframe(periods=120, freq='M')
-    forecast = m.predict(future)
-    return plot_plotly(m, forecast)
-    # fig = plt.figure(figsize=(15,8), dpi=1000)
-    # ax = fig.add_subplot(111)
-    # plt.title("Housing Cost Projections")
-    # fig1 = m.plot(forecast, ax=ax, xlabel="Year", ylabel="Housing Cost in USD")
-    # return fig1
+def prophet_prediction(row, zip_code):
+    if os.path.exists('pickles/{}_forecast.plk'.format(zip_code)):
+        with open("pickles/{}_model.plk", 'wb') as f:
+            pickle.dump(m, f)
+        forecast = pd.read_pickle('pickles/{}_forecast.plk'.format(zip_code)) 
+        return plot_plotly(m, forecast)
+    else:
+        m = Prophet(seasonality_mode='multiplicative')
+        m.fit(row)
+        future = m.make_future_dataframe(periods=120, freq='M')
+        forecast = m.predict(future)
+        return plot_plotly(m, forecast)
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -53,8 +55,11 @@ app.layout = html.Div([
     html.H6('In how many years do you want to retire?'),
     dcc.Slider(min=1, max=10, step=0.5, value=5),
     html.Div(id='my-div'),
-    dcc.Graph(id='pred-graph'),
-    dcc.Graph(id='zip-map')
+    html.Div([
+        dcc.Graph(id='pred-graph'),
+        dcc.Graph(id='zip-map')
+    ])
+    
 ])
 
 @app.callback(
@@ -75,7 +80,7 @@ def update_output_div(input_value):
 def extract_zip_display_graph(input_value):
     row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
-        return prophet_prediction(row)
+        return prophet_prediction(row, input_value)
     else:
         return {}
         
