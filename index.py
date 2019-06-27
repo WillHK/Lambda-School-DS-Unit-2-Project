@@ -79,7 +79,7 @@ def update_slider_label(retirement_distance):
 def update_output_div(input_value):
     row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
-        return 'Property Value Projection for {}: {}'.format(input_value, row.iloc[-1]['y_hat'])
+        return 'Property Value Projection for {}'.format(input_value)
     else:
         return 'Invalid Zip'
 
