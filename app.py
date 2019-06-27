@@ -12,6 +12,7 @@ import pandas as pd
 from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
 import matplotlib.pyplot as plt
+import pickle
 load_dotenv()
 
 home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
