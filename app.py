@@ -57,13 +57,14 @@ app.layout = html.Div([
             html.H6('Enter a US Zip Code'),
             dcc.Input(id='zip-code', value=98272, type='number'),
             html.H6('In how many years do you want to retire?'),
-            dcc.Slider(min=1, max=10, step=0.5, value=5),
-            html.Div(id='my-div'),
+            dcc.Slider(min=1, max=10, step=0.5, value=5)
         ], className="six columns"),
         html.Div([
+            html.h4('Map of local area'),
             dcc.Graph(id='zip-map')
         ], className="six columns")
     ], className="row"),
+    html.Div(id='my-div'),
     dcc.Graph(id='pred-graph')
 ], className="container")
 
