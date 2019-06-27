@@ -30,7 +30,7 @@ app.layout = html.Div([
     ], className="row"),
     html.Div(id='my-div'),
     dcc.Graph(id='pred-graph'),
-    html.H6("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
+    html.Div("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
 ], className="container")
 
 home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
@@ -79,7 +79,7 @@ def update_slider_label(retirement_distance):
 def update_output_div(input_value):
     row = prophet_df_from_zillow_row(input_value)
     if isinstance(row, pd.DataFrame):
-        return 'Property Value Projection for {}'.format(input_value)
+        return 'Property Value Projection for {}: {}'.format(input_value, row.iloc[-1]['y_hat'])
     else:
         return 'Invalid Zip'
 
@@ -101,6 +101,8 @@ def extract_zip_display_graph(input_value, retirement_distance):
 )
 def zoom_map_on_zip(input_value):
     data = []
+    center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
+    center_lng = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
 
     data.append(
         Scattermapbox(
@@ -124,8 +126,8 @@ def zoom_map_on_zip(input_value):
             accesstoken=os.getenv("MAPBOX_ACCESS_TOKEN"),
             bearing=0,
             center=dict(
-                lat=zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0],
-                lon=zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
+                lat=center_lat,
+                lon=center_lng
             ),
             pitch=0,
             zoom=9,
