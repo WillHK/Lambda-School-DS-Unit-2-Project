@@ -48,7 +48,7 @@ def prophet_df_from_zillow_row(row):
     return row
 
 def is_within_1_degree(center, marker):
-    if (marker.lat is in range(center.lat-1, center.lat+1)) & (marker.lng is in range(center.lng - 1, center.lng + 1)):
+    if (marker.lat >= center.lat-1 and marker.lng <= center.lat+1) & (marker.lng >= center.lng - 1 & marker.lng <= center.lng + 1):
         return true
     else:
         return false
