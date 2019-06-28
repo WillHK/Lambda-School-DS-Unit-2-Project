@@ -76,7 +76,7 @@ def get_prediction_price(zip_code, retirement_date):
     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
     forecast = forecast[forecast['ds'] < str(retirement_data)]
     return forecast.iloc[-1]['y_hat']
-)
+
 @app.callback(
     Output(component_id="retirement-label", component_property='children'),
     [Input(component_id='retirement-slider', component_property='value')]
