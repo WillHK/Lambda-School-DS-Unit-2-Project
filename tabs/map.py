@@ -1,5 +1,7 @@
 from dash.dependencies import Input, Output
-from tabs import intro, map
+import dash_core_components as dcc
+import dash_html_components as html
+
 import plotly.offline as py_off
 from plotly.graph_objs import *
 
