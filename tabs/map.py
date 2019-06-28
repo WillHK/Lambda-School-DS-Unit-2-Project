@@ -11,8 +11,6 @@ from fbprophet.plot import plot_plotly
 import matplotlib.pyplot as plt
 import pickle
 
-from app import app, server
-
 from app import app
 
 layout = html.Div([
