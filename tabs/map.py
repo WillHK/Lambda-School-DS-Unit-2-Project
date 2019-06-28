@@ -19,6 +19,27 @@ from app import app
 home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
 zip_lat_lng = pd.read_csv("https://gist.githubusercontent.com/erichurst/7882666/raw/5bdc46db47d9515269ab12ed6fb2850377fd869e/US%2520Zip%2520Codes%2520from%25202013%2520Government%2520Data")
 
+layout = html.Div([
+    html.H2('Retirement Hunt'),
+    html.Div([
+        html.Div([
+            html.H6('Enter a US Zip Code'),
+            dcc.Input(id='zip-code', value=98272, type='number'),
+            html.Br(),
+            html.H6('In how many years do you want to retire?'),
+            dcc.Slider(id='retirement-slider',min=1, max=10, step=0.5, value=5),
+            html.Div(id='retirement-label')
+        ], className="six columns"),
+        html.Div([
+            html.H4('Map of local area'),
+            dcc.Graph(id='zip-map')
+        ], className="six columns")
+    ], className="row"),
+    html.Div(id='my-div'),
+    dcc.Graph(id='pred-graph'),
+    html.Div("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
+], className="container")
+
 def prophet_prediction(row, zip_code, retirement_date='2029'):
     # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
     # with open("pickles/{}_model.pkl".format(zip_code), 'rb') as f:
@@ -58,30 +79,6 @@ def prophet_df_from_zillow_row(row):
     row = row.rename(columns={'index': 'ds', list(row)[1]: 'y'})
     row['ds'] = pd.to_datetime(row['ds'])
     return row
-
-
-
-
-layout = html.Div([
-    html.H2('Retirement Hunt'),
-    html.Div([
-        html.Div([
-            html.H6('Enter a US Zip Code'),
-            dcc.Input(id='zip-code', value=98272, type='number'),
-            html.Br(),
-            html.H6('In how many years do you want to retire?'),
-            dcc.Slider(id='retirement-slider',min=1, max=10, step=0.5, value=5),
-            html.Div(id='retirement-label')
-        ], className="six columns"),
-        html.Div([
-            html.H4('Map of local area'),
-            dcc.Graph(id='zip-map')
-        ], className="six columns")
-    ], className="row"),
-    html.Div(id='my-div'),
-    dcc.Graph(id='pred-graph'),
-    html.Div("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
-], className="container")
 
 @app.callback(
     Output(component_id="retirement-label", component_property='children'),

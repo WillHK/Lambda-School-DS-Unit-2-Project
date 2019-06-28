@@ -10,17 +10,19 @@ style = {'maxWidth': '960px', 'margin': 'auto'}
 app.layout = html.Div([
     dcc.Tabs(id='tabs', value='tab-intro', children=[
         dcc.Tab(label='Intro', value='tab-intro'),
+        dcc.Tab(label='Examples', value='tab-examples'),
         dcc.Tab(label='Map', value='tab-map')
     ]),
     html.Div(id='tabs-content')
 ], style=style)
 
-from tabs import intro, map
+from tabs import intro, map, examples
 
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
     if tab == 'tab-intro': return intro.layout
+    elif tab == 'tab-examples': return examples.layout
     elif tab == 'tab-map': return map.layout
 
 if __name__ == '__main__':

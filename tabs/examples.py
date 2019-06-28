@@ -14,4 +14,4 @@ layout = html.Div(
     dcc.Graph(),
     html.Div("In 5 years prices are projected to rise to $267,804, a much more reasonable increase."),
     html.Div("As you can see by picking the right location your money will go much further and allow a higher quality of living during retirement.")
-) 
+)
