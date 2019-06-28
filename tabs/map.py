@@ -126,7 +126,7 @@ def zoom_map_on_zip(input_value):
     )
 
     for i in range(len(data[0].lat)):
-        if is_within_1_degree({lat: center_lat, lng: center_lng}, {lat: data[0].lat[i], lng: data[0].lng[i]}):
+        if is_within_1_degree({'lat': center_lat, 'lng': center_lng}, {'lat': data[0].lat[i], 'lng': data[0].lng[i]}):
             print('True')
 
     layout = Layout(
