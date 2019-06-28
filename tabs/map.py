@@ -78,6 +78,7 @@ def update_slider_label(retirement_distance):
 )
 def update_output_div(input_value):
     row = prophet_df_from_zillow_row(input_value)
+    print(isinstance(row, pd.DataFrame))
     if isinstance(row, pd.DataFrame):
         return 'Property Value Projection for {}'.format(input_value)
     else:
@@ -85,7 +86,8 @@ def update_output_div(input_value):
 
 @app.callback(
     Output(component_id='pred-graph', component_property='figure'),
-    [Input(component_id='zip-code', component_property='value'), Input(component_id='retirement-slider', component_property='value')]
+    [Input(component_id='zip-code', component_property='value'),
+     Input(component_id='retirement-slider', component_property='value')]
 )
 def extract_zip_display_graph(input_value, retirement_distance):
     retirement_date = 2019 + retirement_distance
