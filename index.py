@@ -13,7 +13,7 @@ app.layout = html.Div([
         dcc.Tab(label='Map', value='tab-map')
     ]),
     html.Div(id='tabs-content')
-])
+], style=style)
 
 from tabs import intro, map
 
