@@ -3,10 +3,10 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-# from libs.helper_functions import *
+from libs.helper_functions import *
 
-sf_fig = {} #prophet_prediction(prophet_df_from_zillow_row(94920), 94920, 5)
-md_fig = {} #prophet_prediction(prophet_df_from_zillow_row(21236), 21236, 5)
+sf_fig = prophet_prediction(prophet_df_from_zillow_row(94920), 94920, 2024)
+md_fig = prophet_prediction(prophet_df_from_zillow_row(21236), 21236, 2024)
 layout = html.Div([
     html.H2("Examples"),
     html.H6("San Francisco, California"),
