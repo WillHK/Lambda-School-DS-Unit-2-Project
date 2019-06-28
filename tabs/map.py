@@ -47,11 +47,11 @@ def prophet_df_from_zillow_row(row):
     row['ds'] = pd.to_datetime(row['ds'])
     return row
 
-def is_within_1_degree(center, marker):
-    if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) and (marker.lon >= center.lon - 1 and marker.lon <= center.lon + 1):
-        return True
-    else:
-        return False
+# def is_within_1_degree(center, marker):
+#     if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) and (marker.lon >= center.lon - 1 and marker.lon <= center.lon + 1):
+#         return True
+#     else:
+#         return False
 
 def prophet_prediction(row, zip_code, retirement_date='2029'):
     # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
@@ -71,12 +71,12 @@ def prophet_prediction(row, zip_code, retirement_date='2029'):
     #     forecast = m.predict(future)
     #     return plot_plotly(m, forecast)
 
-def get_prediction_price(zip_code, retirement_date):
-    # p_df = prophet_df_from_zillow_row(zip_code)
-    forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
-    forecast = forecast[forecast['ds'] < str(retirement_date)]
-    # print(forecast.tail(1))
-    return forecast.tail(1)['yhat'].values[0]
+# def get_prediction_price(zip_code, retirement_date):
+#     # p_df = prophet_df_from_zillow_row(zip_code)
+#     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
+#     forecast = forecast[forecast['ds'] < str(retirement_date)]
+#     # print(forecast.tail(1))
+#     return forecast.tail(1)['yhat'].values[0]
 
 @app.callback(
     Output(component_id="retirement-label", component_property='children'),
