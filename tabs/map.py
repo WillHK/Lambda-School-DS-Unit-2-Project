@@ -139,11 +139,11 @@ def zoom_map_on_zip(input_value, retirement_distance):
         )
     )
 
-    for i in range(len(data[0].lat)):
+    # for i in range(len(data[0].lat)):
         # print("Type of center: {}".format(type(center_lat)))
-        # print("Type of market: {}".format(type(data[0].lat[i])))
-        if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
-            data[0].text += " {}".format(get_prediction_price(input_value, retirement_date))
+        # # print("Type of market: {}".format(type(data[0].lat[i])))
+        # if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
+        #     data[0].text += " {}".format(get_prediction_price(input_value, retirement_date))
         # print(data[0].lat[0])
         # if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
         #     print('True')
