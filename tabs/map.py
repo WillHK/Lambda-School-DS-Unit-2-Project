@@ -49,9 +49,9 @@ def prophet_df_from_zillow_row(row):
 
 def is_within_1_degree(center, marker):
     if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) & (marker.lon >= center.lon - 1 & marker.lon <= center.lon + 1):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def prophet_prediction(row, zip_code, retirement_date='2029'):
     # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
@@ -139,7 +139,7 @@ def zoom_map_on_zip(input_value):
             bearing=0,
             center=dict(
                 lat=center_lat,
-                lon=center_lng
+                lon=center_lon
             ),
             pitch=0,
             zoom=9,
