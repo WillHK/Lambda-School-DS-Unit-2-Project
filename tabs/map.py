@@ -64,13 +64,19 @@ def prophet_prediction(row, zip_code, retirement_date='2029'):
     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
     forecast = forecast[(forecast['ds'] > '2009') & (forecast['ds'] < str(retirement_date))] 
     return plot_plotly(m, forecast)
-    # else:
+    # else
     #     m = Prophet(seasonality_mode='multiplicative')
     #     m.fit(row)
     #     future = m.make_future_dataframe(periods=120, freq='M')
     #     forecast = m.predict(future)
     #     return plot_plotly(m, forecast)
 
+def get_prediction_price(zip_code, retirement_date):
+    p_df = prophet_df_from_zillow_row(zip_code)
+    forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code)
+    forecast = forecast[forecast['ds'] < str(retirement_data)]
+    return forecast.iloc[-1]['y_hat']
+)
 @app.callback(
     Output(component_id="retirement-label", component_property='children'),
     [Input(component_id='retirement-slider', component_property='value')]
@@ -105,9 +111,11 @@ def extract_zip_display_graph(input_value, retirement_distance):
         
 @app.callback(
     Output(component_id='zip-map', component_property='figure'),
-    [Input(component_id='zip-code', component_property='value')]
+    [Input(component_id='zip-code', component_property='value'),
+     Input(component_id='retirement-slider', component_property='value')]
 )
-def zoom_map_on_zip(input_value):
+def zoom_map_on_zip(input_value, retirement_distance):
+    retirement_date = 2019 + retirement_distance
     data = []
     center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
     center_lon = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
@@ -117,7 +125,7 @@ def zoom_map_on_zip(input_value):
             lon=zip_lat_lng['LNG'].values,
             lat=zip_lat_lng['LAT'].values,
             text=zip_lat_lng['ZIP'].values,
-            mode='markers',
+            mode='markers+text',
             name="Zip Codes",
             marker=scattermapbox.Marker(
                 color="#ffffff"
@@ -128,11 +136,11 @@ def zoom_map_on_zip(input_value):
     for i in range(len(data[0].lat)):
         # print("Type of center: {}".format(type(center_lat)))
         # print("Type of market: {}".format(type(data[0].lat[i])))
-        # if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
-        #     print("True")
+        if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
+            data[0].text += " {}".format(get_prediction_price(input_value, retirement_date))
         # print(data[0].lat[0])
-        if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
-            print('True')
+        # if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
+        #     print('True')
 
     layout = Layout(
         margin=dict(t=0,b=0,r=0,l=0),
