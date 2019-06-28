@@ -127,7 +127,7 @@ def zoom_map_on_zip(input_value, retirement_distance):
             projections.append(get_prediction_price(input_value, retirement_date))
         else:
             projections.append(0)
-    zip_lat_lng['PROJECTION'] = projections
+    zip_lat_lng['PROJECTIONS'] = projections
 
     data.append(
         Scattermapbox(
