@@ -48,7 +48,7 @@ def prophet_df_from_zillow_row(row):
     return row
 
 def is_within_1_degree(center, marker):
-    if (marker.lat >= center.lat-1 and marker.lng <= center.lat+1) & (marker.lng >= center.lng - 1 & marker.lng <= center.lng + 1):
+    if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) & (marker.lon >= center.lon - 1 & marker.lon <= center.lon + 1):
         return true
     else:
         return false
@@ -110,7 +110,7 @@ def extract_zip_display_graph(input_value, retirement_distance):
 def zoom_map_on_zip(input_value):
     data = []
     center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
-    center_lng = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
+    center_lon = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
 
     data.append(
         Scattermapbox(
@@ -126,7 +126,7 @@ def zoom_map_on_zip(input_value):
     )
 
     for i in range(len(data[0].lat)):
-        if is_within_1_degree({'lat': center_lat, 'lng': center_lng}, {'lat': data[0].lat[i], 'lng': data[0].lon[i]}):
+        if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
             print('True')
 
     layout = Layout(
