@@ -12,7 +12,7 @@ from fbprophet.plot import plot_plotly
 import matplotlib.pyplot as plt
 import pickle
 
-home_values = pd.read_csv('../Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
+home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
 zip_lat_lng = pd.read_csv("https://gist.githubusercontent.com/erichurst/7882666/raw/5bdc46db47d9515269ab12ed6fb2850377fd869e/US%2520Zip%2520Codes%2520from%25202013%2520Government%2520Data")
 
 def prophet_prediction(row, zip_code, retirement_date='2029'):
