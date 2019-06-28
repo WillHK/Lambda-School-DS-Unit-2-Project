@@ -20,6 +20,7 @@ layout = html.Div([
         html.Div([
             html.H6('Enter a US Zip Code'),
             dcc.Input(id='zip-code', value=98272, type='number'),
+            html.Br(),
             html.H6('In how many years do you want to retire?'),
             dcc.Slider(id='retirement-slider',min=1, max=10, step=0.5, value=5),
             html.Div(id='retirement-label')
@@ -37,7 +38,6 @@ layout = html.Div([
 home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
 zip_lat_lng = pd.read_csv("https://gist.githubusercontent.com/erichurst/7882666/raw/5bdc46db47d9515269ab12ed6fb2850377fd869e/US%2520Zip%2520Codes%2520from%25202013%2520Government%2520Data")
 
-# home_values[home_values['RegionName'] == 98117]
 def prophet_df_from_zillow_row(row):
     row = home_values[home_values['RegionName'] == row].copy()
     row = row.T
