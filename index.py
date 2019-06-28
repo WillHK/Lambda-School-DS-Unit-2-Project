@@ -4,7 +4,6 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app, server
-from tabs import intro, map
 
 app.layout = html.Div([
     dcc.Tabs(id='tabs', value='tab-intro', children=[
@@ -13,6 +12,8 @@ app.layout = html.Div([
     ]),
     html.Div(id='tabs-content')
 ])
+
+from tabs import intro, map
 
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
