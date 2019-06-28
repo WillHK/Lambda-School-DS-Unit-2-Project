@@ -126,8 +126,8 @@ def zoom_map_on_zip(input_value):
     )
 
     for i in range(len(data[0].lat)):
-        print("Type of center: {}".format(center_lat))
-        print("Type of market: {}".format(data[0].lat[i]))
+        print("Type of center: {}".format(type(center_lat)))
+        print("Type of market: {}".format(type(data[0].lat[i])))
         # if (data[0].lat[i] >= center_lat-1 and data[0].lat[i] <= center_lat+1) and (data[0].lon[i] >= center_lon - 1 & data[0].lon[i] <= center_lon + 1):
             # print("True")
         # print(data[0].lat[0])
