@@ -133,7 +133,7 @@ def zoom_map_on_zip(input_value, retirement_distance):
         Scattermapbox(
             lon=zip_lat_lng['LNG'].values,
             lat=zip_lat_lng['LAT'].values,
-            text=str(zip_lat_lng['PROJECTIONS'].values),
+            text=zip_lat_lng['PROJECTIONS'].values,
             mode='markers+text',
             name="Zip Codes",
             marker=scattermapbox.Marker(
