@@ -42,8 +42,6 @@ def prophet_df_from_zillow_row(row):
     row = row.T
     row = row.drop(['RegionID', 'RegionName', 'City', 'State', 'Metro', 'CountyName', 'SizeRank'])
     row = row.reset_index()
-    print(row)
-    print(row.T)
     row = row.rename(columns={'index': 'ds', list(row)[1]: 'y'})
     row['ds'] = pd.to_datetime(row['ds'])
     return row
