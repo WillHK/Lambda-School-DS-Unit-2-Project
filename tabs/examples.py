@@ -2,10 +2,8 @@ from app import app
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-import sys
-sys.path.insert(0, '/libs')
 
-from helper_functions import *
+from libs import helper_functions
 
 sf_fig = prophet_prediction(prophet_df_from_zillow_row(94920), 94920, 5)
 md_fig = prophet_prediction(prophet_df_from_zillow_row(21236), 21236, 5)
