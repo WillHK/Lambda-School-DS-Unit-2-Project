@@ -116,9 +116,9 @@ def extract_zip_display_graph(input_value, retirement_distance):
      Input(component_id='retirement-slider', component_property='value')]
 )
 def zoom_map_on_zip(input_value, retirement_distance):
-    retirement_date = 2019 + retirement_distance
+    # retirement_date = 2019 + retirement_distance
     data = []
-    projections = []
+    # projections = []
 
     center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
     center_lon = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
