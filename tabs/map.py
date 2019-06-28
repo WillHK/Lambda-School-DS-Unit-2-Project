@@ -48,7 +48,7 @@ def prophet_df_from_zillow_row(row):
     return row
 
 def is_within_1_degree(center, marker):
-    if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) & (marker.lon >= center.lon - 1 & marker.lon <= center.lon + 1):
+    if (marker.lat >= center.lat-1 and marker.lat <= center.lat+1) and (marker.lon >= center.lon - 1 and marker.lon <= center.lon + 1):
         return True
     else:
         return False
@@ -128,11 +128,11 @@ def zoom_map_on_zip(input_value):
     for i in range(len(data[0].lat)):
         # print("Type of center: {}".format(type(center_lat)))
         # print("Type of market: {}".format(type(data[0].lat[i])))
-        if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
-            print("True")
+        # if (data[0].lat[i] >= center_lat-1.0 and data[0].lat[i] <= center_lat+1.0) and (data[0].lon[i] >= center_lon - 1.0 and data[0].lon[i] <= center_lon + 1.0):
+        #     print("True")
         # print(data[0].lat[0])
-        # if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
-        #     print('True')
+        if is_within_1_degree({'lat': center_lat, 'lon': center_lon}, {'lat': data[0].lat[i], 'lon': data[0].lon[i]}):
+            print('True')
 
     layout = Layout(
         margin=dict(t=0,b=0,r=0,l=0),
