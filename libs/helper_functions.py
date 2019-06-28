@@ -24,7 +24,7 @@ def prophet_prediction(row, zip_code, retirement_date='2029'):
     row = row[(row['ds'] > '2009')]
     m.fit(row)
     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
-    forecast = forecast[(forecast['ds'] > '2009') & (forecast['ds'] < str(retirement_date))] 
+    forecast = forecast[(forecast['ds'] > '2009') and (forecast['ds'] < str(retirement_date))] 
     return plot_plotly(m, forecast)
     # else
     #     m = Prophet(seasonality_mode='multiplicative')
