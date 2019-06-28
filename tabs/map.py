@@ -120,7 +120,10 @@ def zoom_map_on_zip(input_value, retirement_distance):
     data = []
     center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
     center_lon = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
-
+    for i in range(len(zip_latlng[0].LAT)):
+        if (zip_lat_lng.iloc[i].LAT >= center_lat-1.0 and zip_lat_lng.iloc[i].LAT <= center_lat+1.0) and (zip_lat_lng.iloc[i].LNG >= center_lon - 1.0 and zip_lat_lng.iloc[i].LNG <= center_lon + 1.0):
+            zip_lat_lng.iloc[i]["PROJECTION"] = get_prediction_price(input_value, retirement_date)
+            print(zip_lat_lng.iloc[i]["PROJECTION"])
     data.append(
         Scattermapbox(
             lon=zip_lat_lng['LNG'].values,
