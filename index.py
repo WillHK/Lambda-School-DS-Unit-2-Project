@@ -2,142 +2,20 @@ import os
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-import plotly.offline as py_off
-from plotly.graph_objs import *
-
-import pandas as pd
-from fbprophet import Prophet
-from fbprophet.plot import plot_plotly
-import matplotlib.pyplot as plt
-import pickle
-
-from app import app, server
 
 app.layout = html.Div([
-    html.H2('Retirement Hunt'),
-    html.Div([
-        html.Div([
-            html.H6('Enter a US Zip Code'),
-            dcc.Input(id='zip-code', value=98272, type='number'),
-            html.H6('In how many years do you want to retire?'),
-            dcc.Slider(id='retirement-slider',min=1, max=10, step=0.5, value=5),
-            html.Div(id='retirement-label')
-        ], className="six columns"),
-        html.Div([
-            html.H4('Map of local area'),
-            dcc.Graph(id='zip-map')
-        ], className="six columns")
-    ], className="row"),
-    html.Div(id='my-div'),
-    dcc.Graph(id='pred-graph'),
-    html.Div("Data acquired from Zillow.com/data on June 19th, 2019. Aggregated data on this page is made freely available by Zillow for non-commercial use.")
-], className="container")
+    dcc.Tabs(id='tabs', value='tab-intro', children=[
+        dcc.Tab(label='Intro', value='tab-intro'),
+        dcc.Tab(label='Map', value='tab-map')
+    ]),
+    html.Div(id='tabs-content')
+])
 
-home_values = pd.read_csv('Zip_Zhvi_AllHomes.csv', encoding="ISO-8859-1")
-zip_lat_lng = pd.read_csv("https://gist.githubusercontent.com/erichurst/7882666/raw/5bdc46db47d9515269ab12ed6fb2850377fd869e/US%2520Zip%2520Codes%2520from%25202013%2520Government%2520Data")
-
-# home_values[home_values['RegionName'] == 98117]
-def prophet_df_from_zillow_row(row):
-    row = home_values[home_values['RegionName'] == row].copy()
-    row = row.T
-    row = row.drop(['RegionID', 'RegionName', 'City', 'State', 'Metro', 'CountyName', 'SizeRank'])
-    row = row.reset_index()
-    print(row)
-    print(row.T)
-    row = row.rename(columns={'index': 'ds', list(row)[1]: 'y'})
-    row['ds'] = pd.to_datetime(row['ds'])
-    return row
-
-
-def prophet_prediction(row, zip_code, retirement_date='2029'):
-    # if os.path.exists('pickles/{}_forecast.pkl'.format(zip_code)):
-    # with open("pickles/{}_model.pkl".format(zip_code), 'rb') as f:
-    #     unpickler = pickle.Unpickler(f)
-    #     m = unpickler.load()
-    m = Prophet(seasonality_mode='multiplicative')
-    row = row[(row['ds'] > '2009')]
-    m.fit(row)
-    forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
-    forecast = forecast[(forecast['ds'] > '2009') & (forecast['ds'] < str(retirement_date))] 
-    return plot_plotly(m, forecast)
-    # else:
-    #     m = Prophet(seasonality_mode='multiplicative')
-    #     m.fit(row)
-    #     future = m.make_future_dataframe(periods=120, freq='M')
-    #     forecast = m.predict(future)
-    #     return plot_plotly(m, forecast)
-
-@app.callback(
-    Output(component_id="retirement-label", component_property='children'),
-    [Input(component_id='retirement-slider', component_property='value')]
-)
-def update_slider_label(retirement_distance):
-    return f'{retirement_distance} years'
-
-@app.callback(
-    Output(component_id='my-div', component_property='children'),
-    [Input(component_id='zip-code', component_property='value')]
-)
-def update_output_div(input_value):
-    row = prophet_df_from_zillow_row(input_value)
-    if isinstance(row, pd.DataFrame):
-        return 'Property Value Projection for {}'.format(input_value)
-    else:
-        return 'Invalid Zip'
-
-@app.callback(
-    Output(component_id='pred-graph', component_property='figure'),
-    [Input(component_id='zip-code', component_property='value'), Input(component_id='retirement-slider', component_property='value')]
-)
-def extract_zip_display_graph(input_value, retirement_distance):
-    retirement_date = 2019 + retirement_distance
-    row = prophet_df_from_zillow_row(input_value)
-    if isinstance(row, pd.DataFrame):
-        return prophet_prediction(row, input_value, retirement_date)
-    else:
-        return {}
-        
-@app.callback(
-    Output(component_id='zip-map', component_property='figure'),
-    [Input(component_id='zip-code', component_property='value')]
-)
-def zoom_map_on_zip(input_value):
-    data = []
-    center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
-    center_lng = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
-
-    data.append(
-        Scattermapbox(
-            lon=zip_lat_lng['LNG'].values,
-            lat=zip_lat_lng['LAT'].values,
-            text=zip_lat_lng['ZIP'].values,
-            mode='markers',
-            name="Zip Codes",
-            marker=scattermapbox.Marker(
-                color="#ffffff"
-            )
-        )
-    )
-
-    layout = Layout(
-        margin=dict(t=0,b=0,r=0,l=0),
-        autosize=True,
-        hovermode='closest',
-        showlegend=False,
-        mapbox=dict(
-            accesstoken=os.getenv("MAPBOX_ACCESS_TOKEN"),
-            bearing=0,
-            center=dict(
-                lat=center_lat,
-                lon=center_lng
-            ),
-            pitch=0,
-            zoom=9,
-            style='dark'
-        )
-    )
-    fig = Figure(data=data, layout=layout)
-    return fig
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    if tab == 'tab-intro': return intro.layout
+    elif tab == 'tab-map': return map.layout
 
 if __name__ == '__main__':
     app.run_server(debug=True)
