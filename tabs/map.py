@@ -125,12 +125,13 @@ def zoom_map_on_zip(input_value, retirement_distance):
     for i in range(len(zip_lat_lng.LAT)):
         if (zip_lat_lng.iloc[i].LAT >= center_lat-1.0 and zip_lat_lng.iloc[i].LAT <= center_lat+1.0) and (zip_lat_lng.iloc[i].LNG >= center_lon - 1.0 and zip_lat_lng.iloc[i].LNG <= center_lon + 1.0):
             projections.append(get_prediction_price(input_value, retirement_date))
-    print(projections)
+    zip_lat_lng['PROJECTION'] = projections
+
     data.append(
         Scattermapbox(
             lon=zip_lat_lng['LNG'].values,
             lat=zip_lat_lng['LAT'].values,
-            text=zip_lat_lng['ZIP'].values,
+            text=str(zip_lat_lng['ZIP'].values) + ": ${}".format(zip_lat_lng['projections']),
             mode='markers+text',
             name="Zip Codes",
             marker=scattermapbox.Marker(
