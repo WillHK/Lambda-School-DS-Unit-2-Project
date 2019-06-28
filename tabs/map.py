@@ -75,7 +75,8 @@ def get_prediction_price(zip_code, retirement_date):
     p_df = prophet_df_from_zillow_row(zip_code)
     forecast = pd.read_pickle('pickles/{}_forecast.pkl'.format(zip_code))
     forecast = forecast[forecast['ds'] < str(retirement_date)]
-    return forecast.tail(1)['y_hat']
+    print(forecast.tail(1))
+    # return forecast.tail(1)['y_hat']
 
 @app.callback(
     Output(component_id="retirement-label", component_property='children'),
