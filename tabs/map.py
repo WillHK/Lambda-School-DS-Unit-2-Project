@@ -122,18 +122,18 @@ def zoom_map_on_zip(input_value, retirement_distance):
 
     center_lat = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LAT'].values[0]
     center_lon = zip_lat_lng[zip_lat_lng['ZIP'] == input_value]['LNG'].values[0]
-    for i in range(len(zip_lat_lng.LAT)):
-        if (zip_lat_lng.iloc[i].LAT >= center_lat-1.0 and zip_lat_lng.iloc[i].LAT <= center_lat+1.0) and (zip_lat_lng.iloc[i].LNG >= center_lon - 1.0 and zip_lat_lng.iloc[i].LNG <= center_lon + 1.0):
-            projections.append(get_prediction_price(int(zip_lat_lng.iloc[i].ZIP), retirement_date))
-        else:
-            projections.append(0)
-    zip_lat_lng['PROJECTIONS'] = projections
+    # for i in range(len(zip_lat_lng.LAT)):
+    #     if (zip_lat_lng.iloc[i].LAT >= center_lat-1.0 and zip_lat_lng.iloc[i].LAT <= center_lat+1.0) and (zip_lat_lng.iloc[i].LNG >= center_lon - 1.0 and zip_lat_lng.iloc[i].LNG <= center_lon + 1.0):
+    #         projections.append(get_prediction_price(int(zip_lat_lng.iloc[i].ZIP), retirement_date))
+    #     else:
+    #         projections.append(0)
+    # zip_lat_lng['PROJECTIONS'] = projections
 
     data.append(
         Scattermapbox(
             lon=zip_lat_lng['LNG'].values,
             lat=zip_lat_lng['LAT'].values,
-            text=zip_lat_lng['PROJECTIONS'].values,
+            text=zip_lat_lng['ZIP'].values,
             mode='markers+text',
             name="Zip Codes",
             marker=scattermapbox.Marker(
