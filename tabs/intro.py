@@ -12,5 +12,9 @@ layout = html.Div(children=[html.H6("Plan your perfect retirement"),
             html.Div("Retirement Hunt allows you to search by Zip Code and easily find the projected average home value in the region. Take advantage of the internet age and find the home for your old age."),
             html.Div("To use Retirement Hunt just click on the Map tab and enter a Zip Code you would like to explore."),
             html.Div("After entering a Zip Code You'll see a map of the area and a chart of projected Housing costs."),
-            html.Div("You can also choose a length of time until you retire to see exactly how much your future home will cost.")
+            html.Div("You can also choose a length of time until you retire to see exactly how much your future home will cost."),
+            html.H6("Future Features"),
+            html.Div("An extremely important part of where you choose to live is the weather."),
+            html.Div("In order to assist with finding the ideal location Retirement Hunt will supply weather predictions for the chosen retirement timeframe."),
+            html.Div("Part of aging is needing access to world class healthcare, Retirement Hunt will show nearby healthcare facilities and other senior oriented services.")
 ])
