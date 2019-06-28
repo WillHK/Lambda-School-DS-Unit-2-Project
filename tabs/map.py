@@ -120,8 +120,8 @@ def zoom_map_on_zip(input_value):
         )
     )
 
-    for scatter in data:
-        print(scatter)
+    for i in range(len(data.Scattermapbox.lat)):
+        print(data.Scattermapbox.lat[i])
 
     layout = Layout(
         margin=dict(t=0,b=0,r=0,l=0),
