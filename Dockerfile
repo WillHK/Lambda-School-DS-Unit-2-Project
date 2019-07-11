@@ -22,6 +22,9 @@ RUN pip install --ignore-installed --trusted-host pypi.python.org -r requirement
 # Install FBProphet
 RUN conda install -c conda-forge fbprophet
 
+# Download zillow data
+RUN wget http://files.zillowstatic.com/research/public/Zip/Zip_Zhvi_AllHomes.csv
+
 # Expose port 80 for web browser
 EXPOSE 80
 
