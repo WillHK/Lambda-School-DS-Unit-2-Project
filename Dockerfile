@@ -14,7 +14,7 @@ COPY . /app
 RUN apt-get install -y gcc
 
 # Install requirements
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --ignore-installed --trusted-host pypi.python.org -r requirements.txt
 
 # Expose port 80 for web browser
 EXPOSE 80
