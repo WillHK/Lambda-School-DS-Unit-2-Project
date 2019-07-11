@@ -19,6 +19,9 @@ RUN pip install --trusted-host pypi.python.org pystan
 # Install requirements
 RUN pip install --ignore-installed --trusted-host pypi.python.org -r requirements.txt
 
+# Install FBProphet
+RUN conda install -c conda-forge fbprophet
+
 # Expose port 80 for web browser
 EXPOSE 80
 
