@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . /app
 
 # Install GCC from apt-get repository
-RUN apt-get install gcc
+RUN apt-get install -y gcc
 
 # Install requirements
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
