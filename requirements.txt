@@ -1,8 +1,8 @@
 plotly
-dash==1.01
-dash-daq==0.1.0
-dash-core-components==1.0.0
-dash-html-components==1.0.0
+dash
+dash-daq
+dash-core-components
+dash-html-components
 gunicorn
 python-dotenv
 fbprophet
