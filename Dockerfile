@@ -10,6 +10,9 @@ WORKDIR /app
 # Copy from base machine to docker container
 COPY . /app
 
+# Install GCC
+RUN conda install -c anaconda gcc
+
 # Install requirements
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
