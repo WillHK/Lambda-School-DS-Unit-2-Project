@@ -1,3 +1,4 @@
+pystan
 plotly
 dash
 dash-daq
