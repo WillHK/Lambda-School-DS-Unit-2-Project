@@ -13,6 +13,9 @@ COPY . /app
 # Install GCC from apt-get repository
 RUN apt-get install -y gcc
 
+# Install pystan, has to be done first?
+RUN pip install --trusted-host pypi.python.org pystan
+
 # Install requirements
 RUN pip install --ignore-installed --trusted-host pypi.python.org -r requirements.txt
 

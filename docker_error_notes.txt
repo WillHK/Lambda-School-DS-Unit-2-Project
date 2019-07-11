@@ -1,3 +1,4 @@
 tables 3.5.1 requires mock>=2.0, which is not installed.
 spyder 3.3.3 requires pyqt5<=5.12; python_version >= "3", which is not installed.
 astroid 2.2.5 requires typed-ast>=1.3.0; implementation_name == "cpython", which is not installed.
+Command "/opt/conda/bin/python -u -c "import setuptools, tokenize;__file__='/tmp/pip-install-d8eyklwy/fbprophet/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /tmp/pip-record-htnbo9qc/install-record.txt --single-version-externally-managed --compile" failed with error code 1 in /tmp/pip-install-d8eyklwy/fbprophet/
