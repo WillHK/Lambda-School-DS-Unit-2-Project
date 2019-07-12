@@ -29,4 +29,4 @@ RUN wget http://files.zillowstatic.com/research/public/Zip/Zip_Zhvi_AllHomes.csv
 EXPOSE 80
 
 # Run gunicorn server
-CMD ["gunicorn --bind 0.0.0.0:80", "index:server"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "index:server"]
